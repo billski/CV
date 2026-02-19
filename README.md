@@ -16,8 +16,7 @@ Senior Software Engineer · Kelowna, BC
 ## Contents
 
 - **Resume.pdf** — Full resume in PDF (generated from `Resume.md`).
-- **Resume.md** — Resume source in Markdown; includes optional LinkedIn About copy at the bottom.
-- **CV_TEMPLATE.md** — Reusable template for future updates.
+- **Resume.md** — Resume source in Markdown.
 
 ---
 

@@ -110,12 +110,4 @@ Senior software engineer with **12+ years** designing and shipping backend syste
 
 ---
 
-## LinkedIn About (optional copy)
-
-*Use or adapt this for your LinkedIn About section to emphasize side projects and learning new stacks:*
-
-> I'm a programmer with over 12 years of experience. I like taking on projects that push me to learn new tech—in my spare time I built **dogmap.ca** (a PWA for BC dog owners), teaching myself Next.js, Supabase, and Vercel and handling the infrastructure and security (RLS, OAuth, JWT) myself. That same approach carries over to work: I focus on backend systems, REST APIs, ETL, and full-stack work in .NET, Oracle, and JavaScript. I work well in teams, mentor when I can, and try to keep the codebase maintainable. Happy to chat about how I can contribute.
-
----
-
 *Last updated: February 2025*
