@@ -1,0 +1,6 @@
+# Build / generator scripts (not needed for viewing CV)
+md_to_pdf.py
+Resume.html
+
+# Template (personal use, not for employers)
+CV_TEMPLATE.md

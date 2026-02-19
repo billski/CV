@@ -7,9 +7,9 @@
 
 ## Professional Summary
 
-Senior software engineer with **12+ years** designing and shipping backend systems, data pipelines, and full-stack applications. Strong in object-oriented design, **C#/.NET**, **Oracle**, **REST APIs**, and **CI/CD**; experienced in legacy modernization (Classic ASP to .NET), ETL, and technical leadership. Delivers scalable integrations, clean APIs, and maintainable code. Thrives in collaborative teams and mentors junior developers. Experience in higher education; skills in system design and data management transfer to e-commerce, healthcare, and other sectors.
+Senior software engineer with **12+ years** designing and shipping backend systems, data pipelines, and full-stack applications. Strong in **C#/.NET**, **Oracle**, **REST APIs**, and **CI/CD**; experienced in legacy modernization (Classic ASP to .NET), ETL, and technical leadership. I care about infrastructure and security: SSO and token-based auth for web apps, CI/CD with review-gated releases, and (on my own time) [dogmap.ca](https://dogmap.ca)—built from scratch with Next.js, Supabase, and Vercel, including Row Level Security, OAuth, and JWT-protected API routes. Collaborative; mentor junior developers. Background in higher ed; comfortable in e-commerce, healthcare, or other sectors.
 
-> **Core competencies:** Backend & system integrations · Legacy modernization · CI/CD & DevOps · Oracle & SQL · Unit & integration testing · Agile/Scrum · Code review · Technical documentation & mentoring
+> **Core competencies:** Backend & integrations · Legacy modernization · CI/CD & DevOps · Infrastructure & security (SSO, OAuth, RLS, token auth) · Oracle & SQL · Cloud (Supabase, Vercel) · Testing & code review · Technical documentation
 
 **Seeking:** Backend, full-stack (.NET), or DevOps roles — *Kelowna or remote*
 
@@ -20,13 +20,15 @@ Senior software engineer with **12+ years** designing and shipping backend syste
 | Category | Technologies |
 |:--|:--|
 | **Languages** | C#, Java, JavaScript, TypeScript, Python, SQL, PL/SQL, T-SQL, Groovy, PHP, VBScript, PowerShell, XML |
-| **Backend / APIs** | .NET 8, ASP.NET Core, Blazor Server, Classic ASP, REST, SOAP, Dapper, Entity Framework |
-| **Data** | Oracle, SQL Server, stored procedures, schema design, ETL (Talend) |
-| **Frontend** | Blazor, HTML/CSS, jQuery, modern JavaScript |
+| **Backend / APIs** | .NET 8, ASP.NET Core, Blazor Server, Classic ASP, REST, SOAP, Dapper, Entity Framework, Supabase |
+| **Data** | Oracle, SQL Server, PostgreSQL, PostGIS (geospatial), stored procedures, schema design, ETL (Talend) |
+| **Frontend** | Next.js, React, Blazor, TypeScript, TailwindCSS, HTML/CSS, jQuery, MapLibre GL |
 | **Reporting** | Crystal Reports, PL/SQL, T-SQL |
-| **DevOps / Tools** | Git, GitLab CI/CD, PowerShell, YAML, multi-environment release (dev/test/prod) |
+| **DevOps / Tools** | Git, GitLab CI/CD, Vercel, PowerShell, YAML, multi-environment release (dev/test/prod) |
+| **Cloud** | Vercel (frontend deploy), Supabase (backend, DB, Auth, Storage), cloud ERP integrations (REST/SOAP), env-based config, multi-environment (dev/test/prod) |
 | **Testing** | Unit testing, integration testing, code review |
-| **Other** | SSO/ADFS, token-based auth, IIS, Windows Server, Grails, Agile/Scrum |
+| **Security** | SSO/ADFS, token validation, OAuth (Google, Apple), Row Level Security (RLS), JWT in API routes, role-based access (moderator/admin), privilege checks, review-gated production releases, rate limiting |
+| **Other** | IIS, Windows Server, Grails, Agile/Scrum |
 
 ---
 
@@ -37,7 +39,8 @@ Senior software engineer with **12+ years** designing and shipping backend syste
 
 - **Led full modernization** of Facilities Information System from Classic ASP (15 files) to .NET 8 Blazor Server: campus, buildings, rooms, utilities, maintenance, and reporting; preserved Oracle backend and SSO; delivered in **4–6 weeks** with zero breaking changes; pattern adopted for later apps and documented in institutional conversion guide.
 - **Architected and built** room-booking modernization: .NET 8 Blazor Server with SSO, Oracle integration, and feature parity with legacy system; documented technical reference for developers and analysts.
-- **Established local development environment** for the full application suite: structure, tooling, and workflows for a **team of six developers**; designed and implemented CI/CD pipelines (GitLab) for develop/main with automated sync and controlled production deploys; manage and maintain code deployments across dev, test, and production.
+- **Established local development environment** for the full application suite: structure, tooling, and workflows for a **team of six developers**; designed and implemented CI/CD pipelines (GitLab) for develop/main with automated sync and review-gated production deploys; manage and maintain deployments across dev, test, and production.
+- **Implement and document** authentication and access control for web and cloud apps (SSO, token validation, privilege checks); troubleshoot auth and data-service authorization issues.
 - **Participate in Agile/Scrum** ceremonies (sprint planning, standups, retros) weekly and often more frequently; **contribute to code reviews** and **unit and integration testing** for new and modernized applications.
 - **Designed and implemented** team developer handbook with stakeholder input; single source for development workflow, branching strategy, pipelines, and onboarding.
 - **Develop** integrations and customizations from legacy systems to a modern cloud-based system using REST web services in C# .NET and Entity Framework, improving operational efficiency.
@@ -46,7 +49,7 @@ Senior software engineer with **12+ years** designing and shipping backend syste
 - **Re-implement** individual legacy ERP modules from Classic ASP to modern JavaScript libraries and RESTful web services.
 - **Develop** ETL solutions to load data to and from cloud ERP using SOAP/REST and Talend.
 - **Delivered** compliance work: reviewed and updated SQL/XML for CRA T4A/T2202A electronic filing (2026 standards); resolved XML output and parsing issues for student and vendor extracts.
-- **Produce** technical documentation: architecture docs, runbooks, implementation and monitoring guides, and developer onboarding materials.
+- **Write** technical documentation: architecture notes, runbooks, and onboarding guides for the team.
 
 ---
 
@@ -75,7 +78,7 @@ Senior software engineer with **12+ years** designing and shipping backend syste
 
 ## Education
 
-| | |
+| Degree | Institution · Years |
 |:--|:--|
 | **Computer Science Diploma** | Thompson Rivers University · 2010 – 2013 |
 | | *Computer Systems: Operations & Management, Computer Science* |
@@ -101,8 +104,17 @@ Senior software engineer with **12+ years** designing and shipping backend syste
 |:--|:--|
 | **Facilities Information System modernization** | Classic ASP (15 files) → .NET 8 Blazor Server; responsive UI (Bootstrap 5), same Oracle schema and SSO; 4–6 weeks, zero breaking changes; reference implementation for institutional conversion guide. |
 | **Room booking system** | Legacy system modernized to .NET 8 Blazor Server with SSO and Oracle; feature parity, Find Room and booking flows, IIS deployment. |
-| **Local dev environment & CI/CD** | Full application suite set up for local development; GitLab pipelines for develop/main; own code deployment and release process across environments. |
+| **Local dev environment & CI/CD** | Set up full application suite for local dev; GitLab pipelines (develop/main) with review-gated production; own deployment and release process. Infrastructure and access documented for the team. |
 | **Developer handbook** | Designed and implemented with team input; central resource for workflow, branching, pipelines, and onboarding. |
+| **[dogmap.ca](https://dogmap.ca)** *(side project)* | PWA for BC dog owners (dog-friendly places, real-time reports). Built on my own time with **Next.js**, **TypeScript**, **Supabase** (PostgreSQL, PostGIS, Auth, Storage), **Vercel**. **Infrastructure:** Vercel for frontend, Supabase for backend and DB; env-based config, migrations. **Security:** RLS on all tables, OAuth (Google, Apple), JWT verification in API routes, role-based access (moderator/admin), centralized auth-helpers for protected routes, rate limiting. MapLibre map, admin dashboard, moderation queue. Live at [dogmap.ca](https://dogmap.ca). |
+
+---
+
+## LinkedIn About (optional copy)
+
+*Use or adapt this for your LinkedIn About section to emphasize side projects and learning new stacks:*
+
+> I'm a programmer with over 12 years of experience. I like taking on projects that push me to learn new tech—in my spare time I built **dogmap.ca** (a PWA for BC dog owners), teaching myself Next.js, Supabase, and Vercel and handling the infrastructure and security (RLS, OAuth, JWT) myself. That same approach carries over to work: I focus on backend systems, REST APIs, ETL, and full-stack work in .NET, Oracle, and JavaScript. I work well in teams, mentor when I can, and try to keep the codebase maintainable. Happy to chat about how I can contribute.
 
 ---
 
