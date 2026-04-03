@@ -27,7 +27,7 @@ I'm a software engineer with 12 years of experience building and modernizing ent
 
 I want to address one thing directly: this posting asks for a university degree, and I hold a Computer Science diploma from Thompson Rivers University. The posting also notes that a combination of experience and education may be considered. I believe 12 years of hands-on delivery in BC post-secondary IT — building the exact kinds of systems, integrations, and automations this role calls for — demonstrates that depth of capability. I also bring a journeyman marine technician background from BCIT, which gave me a "build things that have to work" engineering mindset that I carry into every project.
 
-I'm based in Kelowna, available for hybrid work, and genuinely excited about the opportunity to apply AI and automation to improve the learner experience at Okanagan College. I would welcome the chance to discuss how my experience maps to your needs.
+I'm based in Kelowna, seeking part-time employment, and available for hybrid work — the on-call nature of this position is a great fit. I'm genuinely excited about the opportunity to apply AI and automation to improve the learner experience at Okanagan College, and I would welcome the chance to discuss how my experience maps to your needs.
 
 Thank you for your consideration.
 
