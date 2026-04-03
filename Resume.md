@@ -22,15 +22,15 @@ I care about infrastructure, security, and knowledge transfer. I document everyt
 | Category | Technologies |
 |:--|:--|
 | **Languages** | C#, Java, JavaScript, TypeScript, Python, SQL, PL/SQL, T-SQL, Groovy, PHP, VBScript, PowerShell, XML |
-| **Backend / APIs** | .NET 8, ASP.NET Core, Blazor Server, Classic ASP, REST, SOAP, Dapper, Entity Framework, Supabase |
+| **Backend / APIs** | .NET 8, ASP.NET Core, Blazor Server, Classic ASP, REST, SOAP, Dapper, Entity Framework, SignalR, Supabase |
 | **Data** | Oracle, SQL Server, PostgreSQL, PostGIS (geospatial), stored procedures, schema design, ETL (Talend) |
-| **Frontend** | Next.js, React, Blazor, TypeScript, TailwindCSS, HTML/CSS, jQuery, MapLibre GL |
+| **Frontend** | Next.js, React, Blazor, TypeScript, TailwindCSS, Bootstrap 4/5, HTML/CSS, jQuery, MapLibre GL |
 | **AI & LLMs** | Claude API (Anthropic), GPT-4, Claude Code, prompt engineering, AI-agent-driven development, context document design |
-| **Reporting** | Crystal Reports, PL/SQL, T-SQL |
-| **DevOps / Tools** | Git, GitLab CI/CD, Vercel, PowerShell, YAML, multi-environment release (dev/test/prod) |
+| **Reporting** | QuestPDF, Crystal Reports, PL/SQL, T-SQL |
+| **DevOps / Tools** | Git (multi-repo, 30+ repos), GitLab CI/CD, Vercel, PowerShell, YAML, SSH/SFTP, multi-environment release (dev/test/prod) |
 | **Cloud** | Vercel, Supabase (Auth, DB, Storage), cloud ERP integrations (REST/SOAP), env-based config |
 | **Testing** | Unit testing, integration testing, code review |
-| **Security** | SSO/ADFS, token validation, OAuth (Google, Apple), Row Level Security (RLS), JWT, role-based access, rate limiting |
+| **Security** | SSO/ADFS, SAML, token validation, OAuth (Google, Apple), Row Level Security (RLS), JWT, CORS architecture, role-based access, rate limiting |
 | **Other** | IIS, Windows Server, Grails, Agile/Scrum |
 
 ---
@@ -51,8 +51,12 @@ I care about infrastructure, security, and knowledge transfer. I document everyt
 
 - **Led full modernization** of Facilities Information System from Classic ASP (15 files) to .NET 8 Blazor Server; preserved Oracle backend and SSO; delivered in **2 days using AI agents** with zero breaking changes; architecture adopted as institutional conversion guide.
 - **Rebuilt room booking system** — 705,714-line Oracle PL/SQL package replaced with .NET 8 Blazor Server; MVP in 1 day, production-ready in 8 days; mobile-responsive with real-time conflict detection (green/yellow/red availability matrix).
-- **Established local development environment** for a team of six developers; designed and implemented GitLab CI/CD pipelines with automated sync and review-gated production deploys across dev, test, and prod.
-- **Implemented and documented** authentication and access control for web and cloud apps (SSO, token validation, privilege checks); troubleshoot auth and data-service authorization issues.
+- **Built SSO landing page tag system** — designed Oracle schema (3 tables, sequences, triggers, cascading deletes), implemented 9 REST API endpoints in C#, and rewrote the entire landing page UI with modern patterns (slide-over panels, toast notifications, inline prompts replacing alert/confirm); includes JSON and Mermaid diagram export.
+- **Replaced Crystal Reports with QuestPDF** in the Building Information System; eliminated legacy licensing dependency with a modern .NET-native reporting library.
+- **Built CDW submission tool** — .NET web app with SignalR real-time progress, SSH/SFTP file transfer via SSH.NET, service account management, and GitLab CI pipeline with automated tests.
+- **Established local development environment** for a team of six; transitioned from server-based development to local feature-branch workflow across 30+ git repositories; designed whitelist `.gitignore` strategy, multi-repo rollback procedures, and health-check-gated GitLab CI/CD pipelines across dev, test, and prod.
+- **Authored modernization assessments** with cost-benefit analysis and phased conversion plans for legacy Classic ASP applications; produced institutional conversion guide used as a reference for future projects.
+- **Implemented and documented** authentication and access control across web and .NET API services (SSO/ADFS, SAML, token validation, privilege checks); designed dynamic CORS architecture enabling multi-developer local development.
 - **Designed team developer handbook** with stakeholder input; single source of truth for branching strategy, pipelines, and onboarding.
 - **Developed integrations** from legacy systems to a modern cloud ERP using REST/SOAP in C# .NET and Entity Framework.
 - **Delivered compliance work** — reviewed and updated SQL/XML for CRA T4A/T2202A electronic filing (2026 standards); resolved XML output and parsing issues for student and vendor extracts.
@@ -108,7 +112,9 @@ I care about infrastructure, security, and knowledge transfer. I document everyt
 |:--|:--|
 | **Facilities Information System modernization** | Classic ASP → .NET 8 Blazor Server; same Oracle schema and SSO; **2 days** using AI agents, zero breaking changes; reference implementation for institutional conversion guide. |
 | **Room booking system** | 705K-line Oracle PL/SQL package → .NET 8 Blazor Server; MVP in 1 day, production-ready in 8 days; mobile-responsive, real-time conflict detection, CI/CD. |
-| **Local dev environment & CI/CD** | Full dev setup for a team of six; GitLab pipelines with review-gated production; documented infrastructure and release process. |
+| **SSO landing page + tag system** | Rewrote SSO landing page UI; designed and built database-backed tag/layer system (Oracle schema, 9 REST endpoints, 12 SQL migrations, JSON/Mermaid export); modern UI with slide-over panels and toast notifications. |
+| **Crystal Reports → QuestPDF** | Replaced legacy licensed reporting in BIS with .NET-native QuestPDF; eliminated licensing dependency. |
+| **Local dev environment & CI/CD** | Transitioned 30+ repos from server-based to local feature-branch development; GitLab pipelines with health-check gates, rollback automation, and multi-environment release. |
 | **Developer handbook** | Designed with team input; central resource for workflow, branching, pipelines, and onboarding. |
 | **[dogmap.ca](https://dogmap.ca)** *(side project)* | PWA for BC dog owners. Next.js, TypeScript, Supabase (PostgreSQL, PostGIS, Auth, Storage), Vercel. RLS on all tables, OAuth (Google, Apple), JWT in API routes, role-based access, admin dashboard, moderation queue. Live at [dogmap.ca](https://dogmap.ca). |
 | **[williamtucker.ca](https://williamtucker.ca)** | Consulting business website — built and deployed as a production site with Tailwind CSS, Formspree contact, Calendly integration, and case studies. |
