@@ -21,7 +21,7 @@ I design and deploy **conversational AI applications**, automate manual workflow
 
 | Category | Technologies |
 |:--|:--|
-| **AI & LLMs** | Claude API (Anthropic), GPT-4, Claude Code, prompt engineering, AI-agent-driven development, context document design, conversational AI (chatbot design & deployment) |
+| **AI & LLMs** | Claude API (Anthropic), OpenAI GPT-5, Claude Code, prompt engineering, AI-agent-driven development, context document design, conversational AI (chatbot design & deployment) |
 | **Languages** | C#, Python, JavaScript, TypeScript, SQL, PL/SQL, T-SQL, Java, Groovy, PHP, VBScript, PowerShell, XML |
 | **Backend / APIs** | .NET 8, ASP.NET Core, Blazor Server, REST, SOAP, Dapper, Entity Framework, SignalR, Express.js, Supabase |
 | **Data** | Oracle, SQL Server, PostgreSQL, PostGIS, stored procedures, schema design, ETL (Talend), data pipelines |
@@ -40,7 +40,7 @@ I design and deploy **conversational AI applications**, automate manual workflow
 
 - **Built and deployed a production AI chatbot** at williamtucker.ca using Claude API (Anthropic SDK), Express.js, and Railway; custom system prompt with full business context, rate limiting, session management, and markdown rendering.
 - Provide AI strategy, implementation, and prototyping services — assess workflows, identify automation opportunities, and deliver working solutions with full documentation.
-- Use AI agents (Claude, GPT-4) to accelerate legacy modernization — work that previously took months now ships in days with CI/CD and automated tests.
+- Use AI agents (Claude, GPT-5) to accelerate legacy modernization — work that previously took months now ships in days with CI/CD and automated tests.
 
 ---
 
