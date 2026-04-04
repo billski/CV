@@ -114,6 +114,3 @@ I design and deploy **conversational AI applications**, automate manual workflow
 | **[dogmap.ca](https://dogmap.ca)** *(side project)* | Full-stack PWA: Next.js, TypeScript, Supabase (PostgreSQL, PostGIS, Auth, Storage), Vercel. OAuth, RLS, JWT, admin dashboard, moderation queue. |
 
 ---
-
-*Tailored for: P02688 — AI/Automation Solutions Developer, Digital Learner Experience, Okanagan College*
-*Last updated: April 2026*
