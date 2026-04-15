@@ -28,4 +28,4 @@ Senior Software Engineer · Kelowna, BC
 
 ---
 
-*Last updated: February 2025*
+*Last updated: April 2026*

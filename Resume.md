@@ -1,7 +1,7 @@
 # William Tucker
 ### Senior Software Engineer · AI Consultant · Kelowna, BC
 
-**[william@williamtucker.ca](mailto:william@williamtucker.ca)** · **[williamtucker.ca](https://williamtucker.ca)** · **[LinkedIn](https://www.linkedin.com/in/william-tucker-06203044/)** · **[GitHub](https://github.com/billski)**
+**250-619-8900** · **[william@williamtucker.ca](mailto:william@williamtucker.ca)** · **[williamtucker.ca](https://williamtucker.ca)** · **[LinkedIn](https://www.linkedin.com/in/william-tucker-06203044/)** · **[GitHub](https://github.com/billski)**
 
 ---
 
@@ -25,7 +25,7 @@ I care about infrastructure, security, and knowledge transfer. I document everyt
 | **Backend / APIs** | .NET 8, ASP.NET Core, Blazor Server, Classic ASP, REST, SOAP, Dapper, Entity Framework, SignalR, Supabase |
 | **Data** | Oracle, SQL Server, PostgreSQL, PostGIS (geospatial), stored procedures, schema design, ETL (Talend) |
 | **Frontend** | Next.js, React, Blazor, TypeScript, TailwindCSS, Bootstrap 4/5, HTML/CSS, jQuery, MapLibre GL |
-| **AI & LLMs** | Claude API (Anthropic), GPT-4, Claude Code, prompt engineering, AI-agent-driven development, context document design |
+| **AI & LLMs** | Claude API (Anthropic), GPT-5, Claude Code, prompt engineering, AI-agent-driven development, context document design |
 | **Reporting** | QuestPDF, Crystal Reports, PL/SQL, T-SQL |
 | **DevOps / Tools** | Git (multi-repo, 30+ repos), GitLab CI/CD, Vercel, PowerShell, YAML, SSH/SFTP, multi-environment release (dev/test/prod) |
 | **Cloud** | Vercel, Supabase (Auth, DB, Storage), cloud ERP integrations (REST/SOAP), env-based config |
@@ -41,7 +41,7 @@ I care about infrastructure, security, and knowledge transfer. I document everyt
 *2026 – Present · Kelowna, BC (Remote)*
 
 - Provide AI strategy, implementation, and prototyping services to finance teams and small businesses.
-- Use AI agents (Claude, GPT-4) to accelerate legacy modernization — work that previously took months now ships in days with CI/CD and automated tests.
+- Use AI agents (Claude, GPT-5) to accelerate legacy modernization — work that previously took months now ships in days with CI/CD and automated tests.
 - Deliver knowledge transfer and documentation so clients own the outcome, not a dependency on outside help.
 
 ---

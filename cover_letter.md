@@ -1,6 +1,6 @@
 # William Tucker
 
-**william@williamtucker.ca · williamtucker.ca · Kelowna, BC**
+**250-619-8900 · william@williamtucker.ca · williamtucker.ca · Kelowna, BC**
 
 ---
 
