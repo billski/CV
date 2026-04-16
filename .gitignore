@@ -1,6 +1,5 @@
 # Build / generator scripts (not needed for viewing CV)
 md_to_pdf.py
-Resume.html
 CV_TEMPLATE.md
 
 # Job-tracking system
