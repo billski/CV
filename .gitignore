@@ -2,3 +2,8 @@
 md_to_pdf.py
 Resume.html
 CV_TEMPLATE.md
+
+# Job-tracking system
+/prospects/
+/.firecrawl/
+/.claude/
