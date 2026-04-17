@@ -124,7 +124,7 @@ These services pre-existed (some since 2017–2018). William's contributions wer
   - Whitelist `.gitignore` pattern enforcing base-repo/app-repo boundary
   - Root `CLAUDE.md` (team-wide agent guidance, branching rules, architecture, documentation governance)
   - Shared `.claude/settings.json` with PostToolUse hook keeping docs fresh on code changes
-  - MCP server integration via `.mcp.json`
+  - MCP server integration via `.mcp.json` — wires in the custom Oracle MCP server (see §4.6)
 
 - **`docs/` Obsidian vault** under `webroot_dev`:
   - Authored the full **webroot modernization assessment** (`docs/modernization/webroot-modernization-assessment.md`) catalog of ~90 apps, with effort estimates and recommended order
@@ -157,6 +157,24 @@ This is a **culture + infrastructure migration**, not just a code change. It aff
 - **SSO landing page tag system** — Oracle schema (3 tables, sequences, triggers, cascading deletes), 9 REST API endpoints in C#, 12 SQL migrations, JSON + Mermaid export
 - **CRA compliance work** — SQL/XML review and updates for T4A/T2202A electronic filing (2026 standards), resolved XML output and parsing issues for student/vendor extracts
 - **Cloud ERP integration** — legacy system → modern cloud ERP via REST/SOAP in C# .NET and Entity Framework
+
+### 4.6 Custom Oracle MCP server (authored for VIU daily use)
+
+- **Repo:** `C:\code\OraclePlugin` ([github.com/billski/Claude-Oracle-MCP](https://github.com/billski/Claude-Oracle-MCP))
+- **Timeline:** 2026-04-10 — authored and shipped in a day, sole author (commit `267f6fb`)
+- **Stack:** TypeScript (ESM) + `@modelcontextprotocol/sdk` ^1.29.0 (`McpServer` + `StdioServerTransport`) + `oracledb` ^6.10.0 + zod; Node.js 20.6+; compiled to `dist/` via `tsc`
+- **Wired into:** `webroot_dev/.mcp.json` as a project-scoped stdio server; README also documents user-scope install
+- **Tools exposed (5):** `query` (read-only SELECT/WITH), `execute` (DML/DDL with opt-in autoCommit), `list_schemas`, `list_tables`, `describe_table` (columns + `all_col_comments`)
+- **Notable engineering choices:**
+  - **Thick-mode init** via `oracledb.initOracleClient()` so LDAP TNS name resolution works — required for VIU's Oracle env; most sample Oracle MCPs skip this and break on LDAP aliases
+  - **Multi-database support** in a single server: `ORACLE_DATABASES` env list → one pool per connect string (poolMin 1 / poolMax 4), selectable per call; uncommon in public MCP examples
+  - **Read/write separation guardrail:** `query` validates statement starts with SELECT/WITH before hitting the DB — DML/DDL must go through `execute`
+  - **Row-limit enforcement:** `maxRows` default 500, hard cap 10000, with explicit truncation messaging back to the agent
+  - **Cross-schema introspection** via `ALL_*` views (not `USER_*`), scoped to the connected user's privileges
+  - Optional Oracle wallet support (`ORACLE_WALLET_LOCATION`, `ORACLE_WALLET_PASSWORD`)
+- **Credentials:** `ORACLE_USER` / `ORACLE_PASSWORD` env vars (deliberately does NOT use the VIU `MD.DB_CREDENTIAL_MGMT.P_GET_PWD` vault pattern — scope call for an external MCP tool)
+- **Status:** Active developer-side daily driver against ODEV for VIU work (confirmed 2026-04-15); not wired to production; team adoption beyond self unverified
+- **Significance:** Demonstrates *building* AI tooling, not just using it — a custom MCP server extending Claude Code with Oracle as a first-class tool, deployed into the team's shared config
 
 ---
 
@@ -220,7 +238,7 @@ Registered business with license; no clients yet. Infrastructure is built in adv
 - **Databases:** Oracle (primary, ~99K LOC PL/SQL), **PostgreSQL via Supabase (Auth + RLS + Storage + PostGIS)**
 - **Auth/Security:** ADFS, SAML, cookie-based SSO, JWT, OAuth (Google, Apple), magic-link auth, Row-Level Security, CORS architecture, CSP hardening, privilege-class enforcement, impersonation with safety checks
 - **Infrastructure:** IIS (appcmd, web.config, URL rewrite), GitLab CI/CD, Vercel, Railway, PowerShell deploy + rollback scripts, robocopy /MIR patterns, SSH/SFTP (SSH.NET, ED25519 keys)
-- **AI/LLM:** Anthropic Claude API (direct SDK integration in production), Claude Code (custom hooks, shared `CLAUDE.md`, MCP servers, planning + spec workflows), prompt engineering, context-document design
+- **AI/LLM:** Anthropic Claude API (direct SDK integration in production), Claude Code (custom hooks, shared `CLAUDE.md`, planning + spec workflows), **custom MCP server authored in TypeScript** (`@modelcontextprotocol/sdk` + `oracledb`, see §4.6) extending Claude with multi-DB Oracle tools, prompt engineering, context-document design
 - **Reporting:** QuestPDF, React PDF Renderer, Crystal Reports (legacy)
 - **Workflow:** Git (multi-repo, 30+ repos), branch-per-feature, merge requests, spec-before-implementation, trace-and-reference documentation
 
@@ -257,6 +275,7 @@ These are specific skills the git history proves, useful as concrete interview t
 8. **Planning-first AI workflow** — `docs/superpowers/plans/` and `specs/` directories in CDWTool show spec → implementation → iteration, not one-shot.
 9. **Supabase RLS policies + helper functions** for admin/client split.
 10. **Supercluster + MapLibre** rendering with React for geospatial PWA (dogmap).
+11. **Custom MCP server authoring** — built an Oracle MCP server in TypeScript (stdio transport, thick-mode LDAP init, multi-DB connection pooling, read/write separation, row-limit guardrails) and wired it into the team's `webroot_dev/.mcp.json`. Demonstrates extending AI tooling, not just consuming it.
 
 ---
 
@@ -298,6 +317,7 @@ When asked about a role, map these capabilities against the posting:
 |---|---|
 | Senior / staff software engineer (8+ yrs) | ✅ 12+ years; meets seniority |
 | AI-accelerated delivery / Claude / agents | ✅ Direct Claude API + Claude Code + shipped AI-augmented modernizations |
+| Building AI tooling (MCP servers / agent tools) | ✅ Authored a custom TypeScript MCP server for Oracle (see §4.6) — not just using agents, extending them |
 | Legacy modernization | ✅ Strong; catalogued ~90-app inventory + authored playbook + shipped 6 conversions |
 | .NET / C# backend | ✅ Strong; .NET 8 and .NET 10 in production |
 | Full-stack (Next.js / React / TypeScript) | ✅ Strong; shipped two production apps + dogmap |
@@ -341,6 +361,9 @@ grep -r "@anthropic-ai/sdk" C:/code/williamtucker
 
 # Tech stack for a Node project
 cat C:/code/wtsadmin/package.json
+
+# Oracle MCP server scope + commit
+cd C:/code/OraclePlugin && git log --all --oneline && cat package.json
 ```
 
 When a memory file or resume line says something concrete, verify before recommending it. Memory captures what was true when written; code is the source of truth for what is true now.
