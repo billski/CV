@@ -1,0 +1,346 @@
+# William Tucker — Master Profile
+
+**Purpose:** Comprehensive, evidence-backed reference for all job-application work. Every claim below is verified against local repositories or live sites — no resume-optimized embellishment. When tailoring a resume or cover letter, cherry-pick from here and preserve the honesty. When asked "am I qualified for X?", read this first.
+
+**Last verified:** 2026-04-16 (against local working copies of `C:\code\webroot_dev`, `C:\code\williamtucker`, `C:\code\wtsadmin`, `C:\code\dogmap`).
+
+---
+
+## 1. Identity & contact
+
+- **Name:** William Tucker
+- **Location:** Kelowna, BC, Canada
+- **Email:** william@williamtucker.ca
+- **Phone:** 250-619-8900
+- **Website:** [williamtucker.ca](https://williamtucker.ca)
+- **LinkedIn:** [linkedin.com/in/william-tucker-06203044](https://www.linkedin.com/in/william-tucker-06203044/)
+- **GitHub:** [github.com/billski](https://github.com/billski)
+- **Git author identities seen in commits:** `Bill Tucker <bill.tucker@viu.ca>`, `William Tucker <bill.tucker@viu.ca>`, `Billski <Bill@bill-tucker.com>`, `tuckerb` (domain account)
+
+---
+
+## 2. Career timeline
+
+| Dates | Role | Employer | Location |
+|---|---|---|---|
+| 2026 – present | Founder & AI Consultant | **William Tucker Solutions (WTS)** | Kelowna, BC (remote) |
+| Jul 2016 – present | Programmer / Analyst | **Vancouver Island University (VIU)** | Nanaimo, BC |
+| Jan 2013 – Jul 2016 | Software Analyst | Thompson Rivers University (TRU) | Kamloops, BC |
+| Sep 2012 – Mar 2013 | Institutional Data Analyst | TRU | Kamloops, BC |
+| May 2012 – Dec 2012 | Institutional Report Coordinator (Co-op) | TRU | Kamloops, BC |
+
+**Total professional software experience:** ~12 years (since 2013, excluding co-op).
+**Pre-software:** Journeyman Marine Technician (BCIT, 2003–2007). This is not typically relevant for software roles but demonstrates hands-on troubleshooting background.
+
+---
+
+## 3. Education & certifications
+
+| Credential | Institution | Dates |
+|---|---|---|
+| Computer Science Diploma (Computer Systems: Operations & Management, Computer Science) | Thompson Rivers University | 2010 – 2013 |
+| Journeyman Marine Technician | British Columbia Institute of Technology | 2003 – 2007 |
+| Java and Hibernate | TestDome | Aug 2021 |
+| SQL (Intermediate) | HackerRank | Aug 2021 |
+
+---
+
+## 4. VIU work — verified project inventory
+
+VIU's web platform lives in `C:\code\webroot_dev` (the "base repo" for shared web infrastructure) plus many application repos under `src/` and elsewhere on the server. The following are catalogued from actual git history.
+
+### 4.1 Modernizations shipped as near-sole author (2026)
+
+| Project | Source repo | Dates | Duration | Commits (WT/total) | Branches | Status |
+|---|---|---|---|---|---|---|
+| **BIS** (Facilities Information System, FIS → .NET 8 Blazor) | `src/bis_source` | 2026-02-25 → 2026-04-15 | ~7 weeks | 66/67 | 14 | In production |
+| **RoomBooking** (legacy Oracle PL/SQL app → .NET 8 Blazor) | `src/roombooking_source` | 2026-02-27 → 2026-03-03 | **5 days** | 49/49 | 24 | In QA, technically ready; go-live blocked on organizational approval (boss will vouch) |
+| **VIUPortal** (Classic ASP SSO landing → .NET 10 Blazor Server) | `src/viuportal_source` | 2026-04-09 → 2026-04-15 | 7 days | 44/44 | 15 | Active development |
+| **SABC SIMS integration** | `src/sabc_source` | 2026-04-10 → 2026-04-11 | **2 days** | 6/6 | 9 | Shipped |
+| **CDWTool** (Canadian Data Warehouse submission tool) | `src/CDWTool` | 2025-11-20 → ongoing | ~5 months | 60/60 | 18 | In production, pivoting to SharePoint |
+| **project-template** (scaffold for future modernizations) | `src/project-template` | 2026-04-11 | 1 day | 3/3 | 6 | Reference template |
+
+**Notable technical depth per project (all verified in source):**
+
+**BIS (the reference implementation):**
+- .NET 8 Blazor Server, Dapper, `Oracle.ManagedDataAccess.Core`
+- Cookie-based SSO reusing the same `WEB_LOGIN_TOKEN` / `WEB_LOGIN_USERNAME` cookies as the Classic ASP apps — no dual-auth required
+- `PersistentComponentState` solution to the Blazor Server SSR/Interactive prerendering auth problem (this is a known hard gotcha; he solved it cleanly)
+- `IniFileResolver` tree-walk pattern for finding `databases_config.ini` regardless of IIS `ContentRootPath` quirks
+- Oracle password vault integration via `MD.DB_CREDENTIAL_MGMT.P_GET_PWD` stored procedure
+- Privilege-class checking via `authdb.authdb_pkg.F_UserHasPrivCls`
+- Cascading auth state from `MainLayout` to pages (not per-page injection)
+- GitLab CI with test + build + deploy-dev stages, JUnit + Cobertura coverage artifacts
+- `appcmd stop apppool` synchronization before `robocopy /MIR` to release DLL file handles; app pool restart in `finally` block
+- Server-side token validation + mutation authz guards added after initial release (commit `0fecb3c`)
+- Full modernization playbook authored: `docs/modernization/fis-bis-modernization-guide.md` — the institutional reference for future Classic ASP → .NET 8 conversions
+
+**RoomBooking:**
+- .NET 8 Blazor Server, same stack and patterns as BIS
+- ~21,410 LOC total (C# + Razor + SQL), of which `findroom.sql` alone is 14,349 lines of Oracle PL/SQL
+- iPhone-crash fix: persisted Data Protection keys across deploys (commit `488d63e`)
+- Circuit-crash fix: guarded SSO redirect against response-already-started (`0ee39bb`)
+- Disabled antiforgery enforcement on Blazor endpoints where appropriate (`b1b037f`)
+- App Pool Modify rights granted for logs + DP-key folders via deploy script (`923a692`, `0a37ed1`)
+
+**VIUPortal:**
+- .NET 10 Blazor Server (newer framework than BIS — deliberate tech choice)
+- Replaces the legacy `sso/viulogin.html` Classic ASP landing
+- Direct ADFS SAML flow (`0cab45c`)
+- Impersonation with original-user privilege checks (`2a30f0f`) — CSP-compliant cookie helper instead of `eval` (`0cb8b87`)
+- Persistent favorites, keyboard shortcuts, VIUWEB modules, session polling
+- CSP hardening, tag management UX parity with legacy (`f65172e`)
+- Portfolio heatmap UI, app-type filter, tag dropdown
+- Per-app Obsidian vault init (`bc6ece7`) — Phase 3c pilot for the federation plan
+- Deploy excludes `Config/` from robocopy mirror to preserve SAML certs
+
+**CDWTool:**
+- .NET web app with SignalR real-time progress (`JobProgressHub`)
+- **SSH to Linux** file transfer via SSH.NET (`Services/SshService.cs`, ED25519 key in `App_Data/id_ed25519`)
+- Originally SFTP-based; pivoting to SharePoint transition (April 2026) — commits show refactor removing `SftpService`, `EmailService`, `MailKit`
+- Integrated with planning-first workflow: `docs/superpowers/plans/` and `docs/superpowers/specs/` directories in the repo
+- Written with extensive deploy docs, quick-reference, local-dev setup, Oracle export troubleshooting guides
+- Planning + debugging iteration visible in commit history — not one-shot AI output
+
+### 4.2 Contributions to existing .NET services (2025 local-dev conversion)
+
+These services pre-existed (some since 2017–2018). William's contributions were primarily enabling local development after the team migrated off the network-drive edit-in-place model.
+
+| Repo | WT commits / total | Recent activity | Nature of contribution |
+|---|---|---|---|
+| `src/LandingService` | 75 / 110 | 2026-04-08 last | **Major recent work** — tag export, permissions split, mermaid diagram generation, allapps endpoint, hidden apps support |
+| `src/FledgerService` | 20 / 64 | 2022-12 last | Earlier contributor; not recent |
+| `src/ADFSConnection` | 13 / 68 | 2025-12-12 last | local-dev CORS + path mappings, initialization fixes |
+| `src/ADFSService` | 6 / 50 | 2025-12-12 last | local-dev CORS, validate endpoint response format, preflight handling |
+| `src/DbInstanceApiController` | 5 / 28 | 2025-12-13 last | local DB instance config, local.viu.ca CORS |
+| `src/XMLRequest_source` | 3 / 4 | 2025-11-04 last | localhost IP bypass for token validation |
+
+**Pattern:** Each service received targeted changes enabling developers to run the full VIU stack locally — CORS for `local.viu.ca`, localhost IP bypass for token validation, local Oracle provider switching (OraOLEDB vs MSDAORA), local DB instance configuration. This was coordinated work across ~5 repos in Nov–Dec 2025.
+
+### 4.3 Shared infrastructure and documentation authored
+
+- **`webroot_dev` root repo itself**: 127 commits across 7 months (Sep 2025 – Apr 2026). Primary author since the Post-Migration Dev Restore in Oct 2025. Added:
+  - `.gitlab-ci.yml` with validate + deploy stages and PowerShell scripts (`deploy.ps1`, `rollback.ps1`, `test.ps1`)
+  - Whitelist `.gitignore` pattern enforcing base-repo/app-repo boundary
+  - Root `CLAUDE.md` (team-wide agent guidance, branching rules, architecture, documentation governance)
+  - Shared `.claude/settings.json` with PostToolUse hook keeping docs fresh on code changes
+  - MCP server integration via `.mcp.json`
+
+- **`docs/` Obsidian vault** under `webroot_dev`:
+  - Authored the full **webroot modernization assessment** (`docs/modernization/webroot-modernization-assessment.md`) catalog of ~90 apps, with effort estimates and recommended order
+  - Authored the **FIS → BIS modernization guide** (`docs/modernization/fis-bis-modernization-guide.md`) — institutional reference
+  - Authored the **Classic ASP → .NET conversion guide** and **VIU app template guide**
+  - Designed the **per-app vault federation plan** (`docs/_meta/per-app-vault-federation-plan.md`) — "AI-first framing" for knowledge bases across the app portfolio
+  - Wrote the trace-and-reference Obsidian pattern: per-object reference docs + end-to-end trace docs with mermaid diagrams and `file:line` anchors (canonical examples in `docs/oracle/` and `docs/auth-sso/`)
+  - Authored MOCs (Maps of Content) for modernization, Oracle, auth-sso, and infra
+
+- **`es-handbook/`** (`C:\code\webroot_dev\es-handbook`): VIU Enterprise Systems Handbook, MkDocs static site with its own `.gitlab-ci.yml` + `sync.ps1` deploy. Topics: SSH setup, git safe-directory fixes, local dev setup, new-dev checklist, feature branch workflow, CI/CD pipeline overview, hotfix workflow, rollback guide, branching strategy diagrams. Authored with Claude.
+
+### 4.4 "Network-drive-to-local-dev" team migration
+
+**Before William (pre–October 2025):** VIU developers edited directly on `\\polk-dev.it.int.viu.ca\webroot\` — every edit was a shared server-staged edit. No git branches, no local iteration, no CI/CD safety nets.
+
+**William's migration work:**
+- Coordinated the Post-Migration Dev Restore (Oct 2025)
+- Established local IIS + per-machine dev environments
+- Added `local.viu.ca` CORS and localhost token-validation bypass across the 5 .NET services listed in §4.2
+- Designed and deployed the whitelist `.gitignore` strategy (base repo tracks only shared infra, app repos stay separate)
+- Built the GitLab CI/CD pipeline with health-check gating, deploy automation, and rollback
+- Authored the es-handbook onboarding docs so the rest of the team could adopt the new model
+- Set up branch protection on `main` and `develop` (GitLab-side, plus repo-side Claude settings for agent safety)
+
+This is a **culture + infrastructure migration**, not just a code change. It affected a team of six and 30+ application repositories.
+
+### 4.5 Other VIU work (from Resume / HANDOFF context, not directly verified in webroot_dev)
+
+- **Crystal Reports → QuestPDF** replacement in BIS — .NET-native reporting, eliminated legacy licensing dependency
+- **SSO landing page tag system** — Oracle schema (3 tables, sequences, triggers, cascading deletes), 9 REST API endpoints in C#, 12 SQL migrations, JSON + Mermaid export
+- **CRA compliance work** — SQL/XML review and updates for T4A/T2202A electronic filing (2026 standards), resolved XML output and parsing issues for student/vendor extracts
+- **Cloud ERP integration** — legacy system → modern cloud ERP via REST/SOAP in C# .NET and Entity Framework
+
+---
+
+## 5. William Tucker Solutions (WTS) — own business
+
+Registered business with license; no clients yet. Infrastructure is built in advance and is itself a demonstration of what he can ship solo.
+
+### 5.1 williamtucker.ca (business site)
+
+- **Repo:** `C:\code\williamtucker`
+- **Live:** [williamtucker.ca](https://williamtucker.ca)
+- **Timeline:** 2026-03-31 → 2026-04-05 (6 days, 42 commits, sole author)
+- **Stack:** Static HTML + Tailwind v4 + Express.js server, **live Claude API chatbot using `@anthropic-ai/sdk` directly** (not a third-party chatbot widget — actual SDK integration), deployed to Railway
+- **Pages:** index, about, services, case-studies, pricing, small-business, contact, faq, checklist, privacy
+- **Significance:** Proves he can ship a production app that consumes the Claude API as a first-class dependency, not just use Claude Code as a dev tool
+
+### 5.2 WTS Admin + Client Portal
+
+- **Repo:** `C:\code\wtsadmin`
+- **Timeline:** 2026-04-03 → 2026-04-06 (4 days, 69 commits, sole author)
+- **Stack:** Next.js 16 (App Router, Turbopack) + TypeScript 5 + **Supabase (PostgreSQL + Auth + Storage + Row-Level Security)** + Tailwind v4 + Stripe + Resend + React PDF, deployed to Vercel
+- **Scope:**
+  - 9 admin pages: dashboard, contacts, proposals, projects, time-tracking, invoices, expenses, documents, settings
+  - 5 client portal pages
+  - 9 database tables + RLS policies + helper functions (`is_admin()`, `get_portal_contact_id()`, `update_updated_at()`)
+  - Magic-link auth for clients, email/password for admin
+  - PDF invoice generation with custom WTS branding
+  - Route protection via Next.js 16's new `proxy.ts` (replaces `middleware.ts`)
+- **Significance:** Full-stack SaaS end-to-end — schema, migrations, RLS, auth, UI, PDF generation, Stripe billing, transactional email. Shipped in 4 days solo.
+
+---
+
+## 6. Independent projects
+
+### 6.1 dogmap.ca
+
+- **Repo:** `C:\code\dogmap`
+- **Live:** [dogmap.ca](https://dogmap.ca)
+- **Timeline:** 2025-10-09 → ongoing, **376 commits** (v2.0.0)
+- **Stack:** Next.js 16 + React 19 + TypeScript + **Supabase (PostgreSQL + PostGIS + Auth + Storage)** + MapLibre GL + react-map-gl + supercluster + Zustand + @tanstack/react-query + Sharp, deployed to Vercel
+- **Scope:** PWA for BC dog owners. Map-based. Geospatial (PostGIS). OAuth (Google, Apple). JWT-protected API routes. RLS on all tables. Role-based access, admin dashboard, moderation queue.
+- **Significance:** Long-running side project demonstrating depth — 6 months of disciplined iteration (not a hackathon). Full verification script in `package.json` (`lint + typecheck + test + build`). Real test coverage via Vitest.
+
+---
+
+## 7. Earlier career (TRU, 2012 – 2016)
+
+- **T.R.U. Student ID Card system** — Java, Oracle backend. Used by thousands of students, integrated with BC Transit and the City of Kamloops.
+- **Employee Survey system** — Groovy Grails + Oracle. Comprehensive reports and ETL jobs across Finance, HR, Payroll, Student departments.
+- **BCNET Conference 2015** — presented on Groovy Grails. Trained staff on institutional reporting, code review, SQL tuning.
+- **Institutional reporting (2012–2013)** — Oracle SQL, PL/SQL, PHP. PHP exposure comes from this period (2012 co-op) — **not recent and not production CakePHP or modern PHP framework experience.**
+
+---
+
+## 8. Tech stack — by confidence level
+
+### Strong (production work in multiple repos, current)
+- **Languages:** C#, TypeScript, JavaScript, SQL, **Oracle PL/SQL**, VBScript (Classic ASP), PowerShell
+- **.NET:** .NET 8, .NET 10, Blazor Server, ASP.NET Core, Classic ASP, Dapper, `Oracle.ManagedDataAccess.Core`, SignalR
+- **Node / Web:** Next.js 16 (App Router + Turbopack), React 19, Express.js, Tailwind v4
+- **Databases:** Oracle (primary, ~99K LOC PL/SQL), **PostgreSQL via Supabase (Auth + RLS + Storage + PostGIS)**
+- **Auth/Security:** ADFS, SAML, cookie-based SSO, JWT, OAuth (Google, Apple), magic-link auth, Row-Level Security, CORS architecture, CSP hardening, privilege-class enforcement, impersonation with safety checks
+- **Infrastructure:** IIS (appcmd, web.config, URL rewrite), GitLab CI/CD, Vercel, Railway, PowerShell deploy + rollback scripts, robocopy /MIR patterns, SSH/SFTP (SSH.NET, ED25519 keys)
+- **AI/LLM:** Anthropic Claude API (direct SDK integration in production), Claude Code (custom hooks, shared `CLAUDE.md`, MCP servers, planning + spec workflows), prompt engineering, context-document design
+- **Reporting:** QuestPDF, React PDF Renderer, Crystal Reports (legacy)
+- **Workflow:** Git (multi-repo, 30+ repos), branch-per-feature, merge requests, spec-before-implementation, trace-and-reference documentation
+
+### Some exposure (real but limited)
+- **SQL Server** (T-SQL): read-only integration with Raiser's Edge RE7 in VIUWEB/award
+- **Java + Hibernate** (2021 cert + earlier Java work at TRU)
+- **Groovy Grails** (2013–2015 at TRU)
+- **Python** (listed; not verified in recent repos)
+- **SOAP** (referenced in integrations; primary work is REST)
+- **Entity Framework** (used in older APIAuthorize / DBConnection services)
+- **ETL** — Talend listed; not recent
+
+### Gaps (acknowledge honestly, do not insinuate transferable)
+- **PHP / CakePHP / Laravel / Symfony** — only PHP exposure is 2012 TRU co-op. Not modern, not framework-heavy.
+- **MySQL** — no production work. PostgreSQL (via Supabase) is the closest equivalent.
+- **AWS** — no direct experience. Cloud infra is Vercel + Railway + Supabase.
+- **Salesforce / Apex / Flows** — no experience.
+- **Mobile native (iOS/Android Swift/Kotlin)** — no experience. PWA exposure only.
+- **Kubernetes / Docker-in-production** — supabase local uses docker but not orchestrated.
+
+---
+
+## 9. Cross-cutting technical patterns William owns
+
+These are specific skills the git history proves, useful as concrete interview talking points.
+
+1. **Classic ASP → .NET 8 Blazor Server modernization playbook** — he wrote it; it's reproducible.
+2. **Blazor Server SSR/Interactive prerendering fix** via `PersistentComponentState` — non-trivial gotcha, cleanly solved.
+3. **Synchronous IIS app pool recycle** via `appcmd stop apppool` + `robocopy /MIR` + restart in `finally` — avoids file-handle contention. Solved the `Copy-Item: file in use` class of problem.
+4. **Oracle password vault pattern** — `MD.DB_CREDENTIAL_MGMT.P_GET_PWD` called at service construction with scoped lifetime.
+5. **Shared-cookie SSO reuse** — same `WEB_LOGIN_TOKEN` validated by Classic ASP and .NET 8 apps against the same `authdb.web_logins` table.
+6. **IniFileResolver tree-walk** — discovers config regardless of IIS `ContentRootPath` quirks, avoids hardcoded paths.
+7. **Whitelist `.gitignore`** for a base-repo that hosts sibling app repos without tracking them.
+8. **Planning-first AI workflow** — `docs/superpowers/plans/` and `specs/` directories in CDWTool show spec → implementation → iteration, not one-shot.
+9. **Supabase RLS policies + helper functions** for admin/client split.
+10. **Supercluster + MapLibre** rendering with React for geospatial PWA (dogmap).
+
+---
+
+## 10. Framing rules (must read before writing any application copy)
+
+### AI-accelerated, not AI-replaced
+William does AI-accelerated work. Planning, debugging, judgment, and accountability stay with him. The commit histories show the pattern: `feat` → `fix` → `refactor` → `docs` cycles, not one-shot generation. When describing AI-assisted work in cover letters or resumes, describe it as **augmented senior engineering** — reference the underlying planning and debugging, not just the speed. Never say "generated by" or "automated." Always emphasize he stayed in the loop on design decisions and verified behaviour.
+
+### RoomBooking status
+Never claim RoomBooking is in production. Never describe it as incomplete. Correct framing: *"Delivered end-to-end in 5 days as sole author; currently in QA and technically ready for production. Go-live pending organizational approval, not engineering work. Reference available on request."* This doubles as an accountability signal.
+
+### BIS timeline
+Earlier drafts of the resume claimed "2 days with AI agents" for BIS. That is **wrong**. BIS was ~7 weeks. The 2-day project is SABC; the 5-day project is RoomBooking. Use the honest numbers. The 7-week number with 66 commits across 14 branches is a *stronger* claim than "2 days" because it demonstrates planned, iterated, tested work — which is what senior engineering roles actually want.
+
+### Stack gaps
+Do not infer transferable skills from adjacent tech. PostgreSQL is not MySQL. Vercel is not AWS. Next.js is not CakePHP. Acknowledge gaps upfront in cover letters — it builds credibility for the claims that are strong.
+
+### Date accuracy
+Always audit all files for stale dates before delivering. Convert relative dates ("last week", "yesterday") to absolute dates when writing.
+
+### Room for honest ranking
+When rating skill levels (e.g. "SQL Server"), distinguish *production-seasoned* from *production-aware* from *exposure*. Don't inflate exposure into expertise.
+
+---
+
+## 11. References
+
+- **VIU direct supervisor / boss** — will vouch that RoomBooking is production-ready in QA and the delay is organizational, not technical. Available on request.
+- Additional VIU references available on request (colleagues from the 6-person team who used the local-dev environment William migrated them to).
+- (Historical TRU references likely still reachable but are 10+ years old.)
+
+---
+
+## 12. Role-fit quick look (heuristics for "am I qualified?")
+
+When asked about a role, map these capabilities against the posting:
+
+| Asking about… | William's position |
+|---|---|
+| Senior / staff software engineer (8+ yrs) | ✅ 12+ years; meets seniority |
+| AI-accelerated delivery / Claude / agents | ✅ Direct Claude API + Claude Code + shipped AI-augmented modernizations |
+| Legacy modernization | ✅ Strong; catalogued ~90-app inventory + authored playbook + shipped 6 conversions |
+| .NET / C# backend | ✅ Strong; .NET 8 and .NET 10 in production |
+| Full-stack (Next.js / React / TypeScript) | ✅ Strong; shipped two production apps + dogmap |
+| PostgreSQL / Supabase | ✅ Three apps using it in production (wtsadmin, dogmap, williamtucker.ca indirectly) |
+| Oracle DBA-lite / PL/SQL | ✅ Deep; packages, stored procs, credential vault, 99K+ LOC |
+| CI/CD / DevOps | ✅ GitLab pipelines across 30+ repos + Vercel + Railway |
+| IIS / Windows infra | ✅ Strong; appcmd, app pools, robocopy patterns |
+| SSO / SAML / ADFS / OAuth | ✅ Strong across Classic ASP, .NET, Supabase |
+| PHP / CakePHP | ❌ 2012 co-op only. Do not claim. |
+| MySQL | ❌ No production. Postgres closest. |
+| AWS | ❌ No direct. Vercel/Railway. |
+| Salesforce / Apex | ❌ No experience. |
+| Mobile native | ❌ No experience. PWA only. |
+| Java backend | ⚠️ Some (TRU-era + cert); not recent |
+| Groovy / Grails | ⚠️ TRU-era only; probably stale |
+| Python | ⚠️ Listed; unverified in recent repos |
+| Talend / classical ETL | ⚠️ Listed; not recent |
+| Technical writing / knowledge transfer | ✅ Strong; authored es-handbook, modernization playbook, 4 major reference guides |
+| Team leadership / migration | ✅ Led 6-person team from network-drive to local-dev + CI/CD |
+
+---
+
+## 13. Verification commands (for future agents)
+
+When a claim below needs checking, run these directly rather than re-asking:
+
+```bash
+# Commit counts across William's author names in webroot_dev
+cd C:/code/webroot_dev && git shortlog -sne --all
+
+# Commit count in a src/ modernization repo
+cd C:/code/webroot_dev/src/bis_source && git log --all --oneline | wc -l
+
+# First/last dates for a project
+cd <repo> && git log --all --reverse --pretty=format:"%ad %s" --date=short | head -1
+cd <repo> && git log --all --pretty=format:"%ad %s" --date=short | head -1
+
+# Verify a specific tech claim
+grep -r "PersistentComponentState" C:/code/webroot_dev/src/bis_source
+grep -r "@anthropic-ai/sdk" C:/code/williamtucker
+
+# Tech stack for a Node project
+cat C:/code/wtsadmin/package.json
+```
+
+When a memory file or resume line says something concrete, verify before recommending it. Memory captures what was true when written; code is the source of truth for what is true now.
