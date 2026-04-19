@@ -49,8 +49,8 @@ I care about infrastructure, security, and knowledge transfer. I document everyt
 ### Programmer/Analyst — Vancouver Island University
 *Jul 2016 – Present · Nanaimo, BC*
 
-- **Led full modernization** of Facilities Information System from Classic ASP (15 files) to .NET 8 Blazor Server; preserved Oracle backend and SSO; delivered in **2 days using AI agents** with zero breaking changes; architecture adopted as institutional conversion guide.
-- **Rebuilt room booking system** — 705,714-line Oracle PL/SQL package replaced with .NET 8 Blazor Server; MVP in 1 day, production-ready in 8 days; mobile-responsive with real-time conflict detection (green/yellow/red availability matrix).
+- **Led full modernization** of Facilities Information System from Classic ASP to .NET 8 Blazor Server — sole author, ~7 weeks (66 commits across 14 branches); preserved Oracle backend and cookie-based SSO; GitLab CI with test/build/deploy stages; architecture adopted as institutional conversion guide. Now in production.
+- **Rebuilt room booking system** as a .NET 8 Blazor Server app — sole author, 5 days end-to-end (49 commits across 24 branches), replacing a legacy Oracle PL/SQL system (~21K LOC, 14K-line `findroom.sql`); mobile-responsive with real-time conflict detection. Currently in QA, technically ready for production; go-live pending organizational approval.
 - **Built SSO landing page tag system** — designed Oracle schema (3 tables, sequences, triggers, cascading deletes), implemented 9 REST API endpoints in C#, and rewrote the entire landing page UI with modern patterns (slide-over panels, toast notifications, inline prompts replacing alert/confirm); includes JSON and Mermaid diagram export.
 - **Replaced Crystal Reports with QuestPDF** in the Building Information System; eliminated legacy licensing dependency with a modern .NET-native reporting library.
 - **Built CDW submission tool** — .NET web app with SignalR real-time progress, SSH/SFTP file transfer via SSH.NET, service account management, and GitLab CI pipeline with automated tests.
@@ -110,8 +110,8 @@ I care about infrastructure, security, and knowledge transfer. I document everyt
 
 | Project | Outcome |
 |:--|:--|
-| **Facilities Information System modernization** | Classic ASP → .NET 8 Blazor Server; same Oracle schema and SSO; **2 days** using AI agents, zero breaking changes; reference implementation for institutional conversion guide. |
-| **Room booking system** | 705K-line Oracle PL/SQL package → .NET 8 Blazor Server; MVP in 1 day, production-ready in 8 days; mobile-responsive, real-time conflict detection, CI/CD. |
+| **Facilities Information System modernization** | Classic ASP → .NET 8 Blazor Server; same Oracle schema and SSO; sole-author ~7 weeks (66 commits, 14 branches); in production; reference implementation for institutional conversion guide. |
+| **Room booking system** | Legacy Oracle PL/SQL room booking system (~21K LOC, 14K-line `findroom.sql`) → .NET 8 Blazor Server; sole author, 5 days end-to-end; mobile-responsive, real-time conflict detection; in QA, blocked on org approval. |
 | **SSO landing page + tag system** | Rewrote SSO landing page UI; designed and built database-backed tag/layer system (Oracle schema, 9 REST endpoints, 12 SQL migrations, JSON/Mermaid export); modern UI with slide-over panels and toast notifications. |
 | **Crystal Reports → QuestPDF** | Replaced legacy licensed reporting in BIS with .NET-native QuestPDF; eliminated licensing dependency. |
 | **Local dev environment & CI/CD** | Transitioned 30+ repos from server-based to local feature-branch development; GitLab pipelines with health-check gates, rollback automation, and multi-environment release. |
