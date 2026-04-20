@@ -2,7 +2,7 @@
 
 **Purpose:** Comprehensive, evidence-backed reference for all job-application work. Every claim below is verified against local repositories or live sites — no resume-optimized embellishment. When tailoring a resume or cover letter, cherry-pick from here and preserve the honesty. When asked "am I qualified for X?", read this first.
 
-**Last verified:** 2026-04-16 (against local working copies of `C:\code\webroot_dev`, `C:\code\williamtucker`, `C:\code\wtsadmin`, `C:\code\dogmap`).
+**Last verified:** 2026-04-20 (against local working copies of `D:\code\webroot_dev`, `C:\code\williamtucker`, `C:\code\wtsadmin`, `C:\code\dogmap`; §4.1 VIUPortal row and §4.7 re-verified 2026-04-20 by an independent Claude Code agent against `webroot_dev`, `webroot_dev/src/portal`, and `webroot_dev/srs` git history).
 
 ---
 
@@ -55,7 +55,7 @@ VIU's web platform lives in `C:\code\webroot_dev` (the "base repo" for shared we
 |---|---|---|---|---|---|---|
 | **BIS** (Facilities Information System, FIS → .NET 8 Blazor) | `src/bis_source` | 2026-02-25 → 2026-04-15 | ~7 weeks | 66/67 | 14 | In production |
 | **RoomBooking** (legacy Oracle PL/SQL app → .NET 8 Blazor) | `src/roombooking_source` | 2026-02-27 → 2026-03-03 | **5 days** | 49/49 | 24 | In QA, technically ready; go-live blocked on organizational approval (boss will vouch) |
-| **VIUPortal** (Classic ASP SSO landing → .NET 10 Blazor Server) | `src/viuportal_source` | 2026-04-09 → 2026-04-15 | 7 days | 44/44 | 15 | Active development |
+| **VIUPortal** (Classic ASP SSO landing → .NET 8 Blazor Server) | `src/portal` | 2026-04-09 → 2026-04-20 | 12 days | ~50/~50 | 18 | Active development |
 | **SABC SIMS integration** | `src/sabc_source` | 2026-04-10 → 2026-04-11 | **2 days** | 6/6 | 9 | Shipped |
 | **CDWTool** (Canadian Data Warehouse submission tool) | `src/CDWTool` | 2025-11-20 → ongoing | ~5 months | 60/60 | 18 | In production, pivoting to SharePoint |
 | **project-template** (scaffold for future modernizations) | `src/project-template` | 2026-04-11 | 1 day | 3/3 | 6 | Reference template |
@@ -84,7 +84,7 @@ VIU's web platform lives in `C:\code\webroot_dev` (the "base repo" for shared we
 - App Pool Modify rights granted for logs + DP-key folders via deploy script (`923a692`, `0a37ed1`)
 
 **VIUPortal:**
-- .NET 10 Blazor Server (newer framework than BIS — deliberate tech choice)
+- .NET 8 Blazor Server (scaffolded on .NET 10, retargeted to .NET 8 on day 1 — commit `31f48ae` — for Windows Server 2012 compatibility)
 - Replaces the legacy `sso/viulogin.html` Classic ASP landing
 - Direct ADFS SAML flow (`0cab45c`)
 - Impersonation with original-user privilege checks (`2a30f0f`) — CSP-compliant cookie helper instead of `eval` (`0cb8b87`)
@@ -175,6 +175,55 @@ This is a **culture + infrastructure migration**, not just a code change. It aff
 - **Credentials:** `ORACLE_USER` / `ORACLE_PASSWORD` env vars (deliberately does NOT use the VIU `MD.DB_CREDENTIAL_MGMT.P_GET_PWD` vault pattern — scope call for an external MCP tool)
 - **Status:** Active developer-side daily driver against ODEV for VIU work (confirmed 2026-04-15); not wired to production; team adoption beyond self unverified
 - **Significance:** Demonstrates *building* AI tooling, not just using it — a custom MCP server extending Claude Code with Oracle as a first-class tool, deployed into the team's shared config
+
+### 4.7 April 2026 delivery sprint — parallel AI-session pattern (12 days)
+
+Across a 5-week window (2026-03-16 → 2026-04-20), with output concentrated in a 12-day intensive run (2026-04-09 → 2026-04-20), William shipped three parallel tracks by running separate Claude Code sessions against separate repos and reconciling the results himself. This section is the clearest demonstration in the profile of the parallel-AI-session working pattern; the framing rules in §10 still apply — this is augmented senior engineering, not one-shot generation.
+
+**Tracks shipped concurrently:**
+
+1. **VIUPortal greenfield Blazor app** — see §4.1 for the full row. Within the 12-day window: scaffold, legacy parity, standalone SAML login with direct ADFS flow (`0cab45c`), impersonation with original-user privilege checks (`2a30f0f`) and CSP-compliant cookie helper (`0cb8b87`), pen-test hardening pass (`b082f3f`: headers, IP validation, auth checks), session polling, UI polish, Phase 3c per-app docs vault initialized (`bc6ece7`).
+
+2. **SRS deploy pipeline rewrite** (`D:\code\webroot_dev\srs`) — ~17 commits concentrated on 2026-04-17. Replaced git-pull-based deploy with an artifact-based model:
+   - Pester v3 test harness scaffold (`798a53b`)
+   - Artifact-copy skeleton replacing the prior deploy script (`310d819`)
+   - Source/destination path validation (`777c62b`, `380214b`)
+   - `robocopy /MIR` with `.git` excluded (`75a5d42`)
+   - Pre-deploy snapshot to `_deploy/<repo>/SRS_<shortsha>` with configurable retention (`dd0ffc5`, `6d98792`, `2253709`)
+   - `.deployed` marker on success (`891844b`)
+   - Dry-run regression guard (`394da08`, `ad79324`)
+   - `-SnapshotRetain` range validation to prevent destructive values (`4b371d8`)
+   - Prod deploy job with manual gate and failure notify (`07e33ad`)
+   - Teams Adaptive Card for richer failure context (`c24d170`)
+
+3. **`webroot_dev` shared-infra `docs/` Obsidian vault (Phases 1–3)** — team-wide vault tracked in the base repo (`1d48e7b` through `e227b14`). Covers:
+   - Phase 1: vault scaffold and modernization assessment
+   - Phase 2a: Oracle SSO-chain schema reference (`366e9f7`) verified against live DB
+   - Phase 2b: Classic ASP shared-includes reference (`c5d4c9d`)
+   - Phase 2c: end-to-end SSO traces with mermaid diagrams (`08b2949`)
+   - Phase 2d: navigation wiring (`5beed6d`)
+   - Phase 3a: per-app vault federation design (`c0b1a3b`)
+   - Phase 3b: per-app vault bootstrap script (`2f927f2`)
+   - Phase 3c: per-app pilot initialized in VIUPortal (`bc6ece7`)
+   - Vault optimization pass 2026-04-19 (frontmatter simplification, guide-splits, trim pass)
+
+**Supporting work in `webroot_dev` (same window):**
+- `5645d2f` — tag export UI with JSON and Mermaid download + API security docs
+- `8d06449` — hidden SSO apps via `ADDITIONAL_APPLICATIONS`
+- `e3ab9b8` — "Try New Portal" beta badge on the legacy nav bar
+- `0d185b3`, `44823c5`, `aec7704` — CI cleanup: auto-deploy `develop`, drop test/rollback stages
+- `ff7c788` — expanded Oracle `authdb-web-logins` direct-bypass exceptions docs
+
+**Effort estimate (order of magnitude, not measured):**
+
+- Hands-on wall-clock, with AI assistance: roughly 40–60 hours across the 5-week window, most inside the 12-day intensive. Typical active day: 4–6 hours of review / redirect / test while AI drafted and researched in parallel.
+- Equivalent solo-developer time (no AI, assuming all required skills already fluent — Classic ASP, Blazor Server, PowerShell/GitLab CI, SAML/ADFS, VIU Oracle schema): roughly 400–500 hours, i.e. ~10–14 weeks full-time. Rough internal split: VIUPortal greenfield 160–240 h; SRS pipeline rewrite 60–80 h; shared-infra docs vault Phases 1–3 80–120 h; per-app pilot + agent-ergonomics spec 30–40 h; misc feature/fix work 40–80 h.
+- These numbers are not clock-measured. Git commit history proves *what* shipped and *when*, not wall-clock effort. The shipped surface area — ~100+ commits across three repos delivering a new Blazor app with SAML + impersonation + pen-test fixes, a full CI/CD deploy rewrite, and a multi-phase documentation platform — is consistent with the solo-hours range.
+- The primary source of leverage is (a) parallelism across concurrent AI sessions, not prompt speed, (b) automated drafting of reference docs verified against the live Oracle schema, and (c) AI-assisted boilerplate plus security-hardening iterations on the Blazor port. William stayed in the loop on design decisions, code review, and verification throughout.
+
+**Independent verification (2026-04-20):** Scope and dates confirmed by an independent Claude Code agent run in a separate session with no prior context. The agent walked the git history of `webroot_dev`, `webroot_dev/src/portal`, and `webroot_dev/srs`, located every named feature with matching dates, and flagged one correction — VIUPortal was scaffolded on .NET 10 and retargeted to .NET 8 on day 1, not a pure ".NET 10" project (now reflected in §4.1 and the bullets above).
+
+**Interview framing:** The useful observation is not the multiplier number — it is the *parallel-session working pattern*. Serial prompting against one project would have looked like any AI-augmented workflow; running three tracks simultaneously, with a human doing reconciliation and review, is what let a 12-day window cover a greenfield app, a CI/CD rewrite, and a docs platform. Treat the multiplier as an order-of-magnitude observation, not a marketing claim.
 
 ---
 
